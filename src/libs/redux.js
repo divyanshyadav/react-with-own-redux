@@ -13,6 +13,7 @@ export const createStore = (reducer) => {
   };
 
   const dispatch = (action) => {
+    console.log(action);
     state = reducer(state, action);
     listeners.forEach((listener) => listener());
   };
