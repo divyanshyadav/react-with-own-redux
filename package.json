@@ -1,7 +1,7 @@
 {
   "name": "react-with-own-redux",
   "version": "1.0.0",
-  "description": "",
+  "description": "Redux lib implementation from scratch",
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
