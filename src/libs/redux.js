@@ -15,6 +15,7 @@ export const createStore = (reducer) => {
   const dispatch = (action) => {
     console.log(action);
     state = reducer(state, action);
+    console.log(state);
     listeners.forEach((listener) => listener());
   };
 

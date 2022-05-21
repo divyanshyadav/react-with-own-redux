@@ -1,8 +1,8 @@
 import React from "react";
-import { withStore } from "../libs/react-redux";
-import store from "../redux/store";
+import { useDispatch } from "../libs/react-redux";
 
-function AddTodo({ dispatch }) {
+function AddTodo() {
+  const dispatch = useDispatch();
   const textFieldRef = React.useRef();
 
   return (
@@ -25,4 +25,4 @@ function AddTodo({ dispatch }) {
   );
 }
 
-export default withStore(store)(AddTodo);
+export default AddTodo;

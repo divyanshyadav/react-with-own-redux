@@ -1,9 +1,10 @@
 import TodoList from "../components/TodoList";
-import { withStore } from "../libs/react-redux";
-import store from "../redux/store";
+import { useDispatch, useSelector } from "../libs/react-redux";
 
-function getTodosByFilter(todos, filter) {
-  switch (filter) {
+function selectVisibleTodos(state) {
+  const { todos, visibilityFilter } = state;
+
+  switch (visibilityFilter) {
     case "SHOW_ALL":
       return todos;
     case "SHOW_ACTIVE":
@@ -15,10 +16,13 @@ function getTodosByFilter(todos, filter) {
   }
 }
 
-function VisibleTodoList({ state, dispatch }) {
+function VisibleTodoList() {
+  const dispatch = useDispatch();
+  const visibleTods = useSelector(selectVisibleTodos);
+
   return (
     <TodoList
-      todos={getTodosByFilter(state.todos, state.visibilityFilter)}
+      todos={visibleTods}
       onTodoClick={(id) => {
         dispatch({
           type: "TOGGLE_TODO",
@@ -35,4 +39,4 @@ function VisibleTodoList({ state, dispatch }) {
   );
 }
 
-export default withStore(store)(VisibleTodoList);
+export default VisibleTodoList;

@@ -1,11 +1,12 @@
-import store from "../redux/store";
 import { withStore } from "../libs/react-redux";
 import Link from "../components/Link";
 
-function FilterLink({ state, dispatch, filter, children }) {
+function FilterLink({ filter, children, dispatch, state }) {
+  const { visibilityFilter } = state;
+
   return (
     <Link
-      active={filter === state.visibilityFilter}
+      active={filter === visibilityFilter}
       onClick={(e) => {
         e.preventDefault();
         dispatch({
@@ -19,4 +20,4 @@ function FilterLink({ state, dispatch, filter, children }) {
   );
 }
 
-export default withStore(store)(FilterLink);
+export default withStore(FilterLink);
