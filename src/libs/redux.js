@@ -1,5 +1,5 @@
-export const createStore = (reducer) => {
-  let state;
+export const createStore = (reducer, initialState = {}) => {
+  let state = initialState;
   let listeners = [];
 
   const getState = () => state;

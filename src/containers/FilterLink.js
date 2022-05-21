@@ -1,21 +1,13 @@
-import { withStore } from "../libs/react-redux";
-import Link from "../components/Link";
-import { setVisibilityFilterAction } from "../redux/actions";
+import { Link, useParams } from "react-router-dom";
 
-function FilterLink({ filter, children, dispatch, state }) {
-  const { visibilityFilter } = state;
+function FilterLink({ filter, children }) {
+  const { filter: selectedFilter = "all" } = useParams();
 
-  return (
-    <Link
-      active={filter === visibilityFilter}
-      onClick={(e) => {
-        e.preventDefault();
-        dispatch(setVisibilityFilterAction(filter));
-      }}
-    >
-      {children}
-    </Link>
-  );
+  if (filter === selectedFilter) {
+    return <strong>{children}</strong>;
+  }
+
+  return <Link to={filter === "all" ? "/" : filter}>{children}</Link>;
 }
 
-export default withStore(FilterLink);
+export default FilterLink;
