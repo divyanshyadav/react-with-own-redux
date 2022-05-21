@@ -7,17 +7,16 @@ function AddTodo() {
   const textFieldRef = React.useRef();
 
   return (
-    <div>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        dispatch(addTodoAction(textFieldRef.current.value));
+        textFieldRef.current.value = "";
+      }}
+    >
       <input ref={textFieldRef} />
-      <button
-        onClick={() => {
-          dispatch(addTodoAction(textFieldRef.current.value));
-          textFieldRef.current.value = "";
-        }}
-      >
-        Add todo
-      </button>
-    </div>
+      <button type="submit">Add todo</button>
+    </form>
   );
 }
 

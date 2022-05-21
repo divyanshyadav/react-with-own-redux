@@ -40,7 +40,10 @@ export function useSelector(selectorFn) {
   const [state, setState] = useState(() => selectorFn(getState()));
 
   useEffect(() => {
-    const unsubscribe = subscribe(() => setState(selectorFn(getState())));
+    const fn = () => setState(selectorFn(getState()));
+    fn();
+
+    const unsubscribe = subscribe(fn);
     return () => unsubscribe();
   }, [subscribe, getState, selectorFn]);
 

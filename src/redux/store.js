@@ -1,7 +1,7 @@
 import throttle from "lodash/throttle";
 import { loadState, saveState } from "../libs/local-storage";
 import { createStore, combineReducers } from "../libs/redux";
-import { todos } from "./reducers/todos";
+import todos from "./reducers/todos";
 
 export function configureStore() {
   const initialState = loadState();
