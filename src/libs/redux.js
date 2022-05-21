@@ -1,4 +1,4 @@
-export const createStore = (reducer, initialState = {}) => {
+export const createStore = (reducer, applyMiddleware, initialState = {}) => {
   let state = initialState;
   let listeners = [];
 
@@ -13,12 +13,11 @@ export const createStore = (reducer, initialState = {}) => {
   };
 
   const dispatch = (action) => {
-    console.log(action);
     state = reducer(state, action);
-    console.log(state);
     listeners.forEach((listener) => listener());
   };
 
+  applyMiddleware(dispatch);
   dispatch({});
 
   return {
@@ -33,3 +32,12 @@ export const combineReducers = (reducers) => (state = {}, action) =>
     acc[key] = reducers[key](state[key], action);
     return acc;
   }, {});
+
+export const applyMiddleware = (...middlewares) => (store) => {
+  middlewares
+    .slice()
+    .reverse()
+    .forEach((middleware) => {
+      store.dispatch = middleware(store)(store.dispatch);
+    });
+};
