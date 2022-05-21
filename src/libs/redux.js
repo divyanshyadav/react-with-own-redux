@@ -1,4 +1,8 @@
-export const createStore = (reducer, applyMiddleware, initialState = {}) => {
+export const createStore = (
+  reducer,
+  initialState = {},
+  dispatchEnhancer = () => {}
+) => {
   let state = initialState;
   let listeners = [];
 
@@ -17,7 +21,7 @@ export const createStore = (reducer, applyMiddleware, initialState = {}) => {
     listeners.forEach((listener) => listener());
   };
 
-  applyMiddleware(dispatch);
+  dispatchEnhancer(dispatch);
   dispatch({});
 
   return {

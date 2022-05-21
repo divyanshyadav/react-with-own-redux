@@ -15,8 +15,8 @@ export function configureStore() {
 
   const store = createStore(
     combineReducers({ todos }),
-    applyMiddleware(...middlewares),
-    initialState
+    initialState,
+    applyMiddleware(...middlewares)
   );
 
   store.subscribe(
