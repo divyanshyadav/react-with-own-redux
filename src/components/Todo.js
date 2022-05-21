@@ -1,13 +1,12 @@
 export default function Todo({ text, completed, onClick, onClickDelete }) {
   return (
     <li
-      onClick={onClick}
       style={{
         textDecoration: completed ? "line-through" : "none",
         cursor: "pointer"
       }}
     >
-      {text}
+      <span onClick={onClick}>{text}</span>
       <button onClick={onClickDelete}>X</button>
     </li>
   );

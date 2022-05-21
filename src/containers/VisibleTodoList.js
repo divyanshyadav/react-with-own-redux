@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useParams } from "react-router-dom";
 import TodoList from "../components/TodoList";
 import { useDispatch, useSelector } from "../libs/react-redux";
@@ -7,9 +8,13 @@ import { getVisibleTodos } from "../redux/reducers/todos";
 function VisibleTodoList() {
   const dispatch = useDispatch();
   const { filter = "all" } = useParams();
-  const visibleTodos = useSelector((state) =>
-    getVisibleTodos(state.todos, filter)
+
+  const selectVisibleTodos = useCallback(
+    (state) => getVisibleTodos(state.todos, filter),
+    [filter]
   );
+
+  const visibleTodos = useSelector(selectVisibleTodos);
 
   return (
     <TodoList
