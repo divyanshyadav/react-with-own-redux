@@ -25,11 +25,11 @@ describe("todos reducer", () => {
     expect(todos(stateBefore, action)).toEqual(stateAfter);
   });
 
-  test("remove todo at index", () => {
+  test("delete todo at index", () => {
     const stateBefore = [{ id: 0, text: "homework", complted: false }];
 
     const action = {
-      type: "REMOVE_TODO",
+      type: "DELETE_TODO",
       id: 0
     };
 

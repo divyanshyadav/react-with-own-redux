@@ -2,34 +2,51 @@ import "./styles.css";
 
 import { withStore } from "./libs/react-redux";
 import store from "./redux/store";
-import Counter from "./components/Counter";
-import Todos from "./components/Todos";
+import TodoList from "./components/TodoList";
+import AddTodo from "./components/AddTodo";
+import { Footer } from "./components/Footer";
+
+function getTodosByFilter(todos, filter) {
+  switch (filter) {
+    case "SHOW_ALL":
+      return todos;
+    case "SHOW_ACTIVE":
+      return todos.filter((t) => !t.completed);
+    case "SHOW_COMPLETED":
+      return todos.filter((t) => t.completed);
+    default:
+      return todos;
+  }
+}
 
 function App({ state, dispatch }) {
   return (
     <div className="App">
-      {/* <pre>{JSON.stringify(state, null, 2)}</pre> */}
-      <Counter
-        value={state.counter}
-        onClickIncrement={() => dispatch({ type: "INCREMENT" })}
-        onClickDecrement={() => dispatch({ type: "DECREMENT" })}
-      />
-      <Todos
-        todos={state.todos}
-        onClickAddTodo={(text) => {
+      <AddTodo
+        onAddClick={(text) => {
           dispatch({
             type: "ADD_TODO",
-            id: Date.now(),
+            id: Date.now().toString(),
             text
           });
         }}
-        onClickDeleteTodo={(id) =>
+      />
+      <TodoList
+        todos={getTodosByFilter(state.todos, state.visibilityFilter)}
+        onTodoClick={(id) => {
+          dispatch({
+            type: "TOGGLE_TODO",
+            id
+          });
+        }}
+        onTodoDeleteClick={(id) =>
           dispatch({
             type: "DELETE_TODO",
             id
           })
         }
       />
+      <Footer />
     </div>
   );
 }
