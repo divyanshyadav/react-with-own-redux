@@ -1,20 +1,7 @@
 import TodoList from "../components/TodoList";
 import { useDispatch, useSelector } from "../libs/react-redux";
-
-function selectVisibleTodos(state) {
-  const { todos, visibilityFilter } = state;
-
-  switch (visibilityFilter) {
-    case "SHOW_ALL":
-      return todos;
-    case "SHOW_ACTIVE":
-      return todos.filter((t) => !t.completed);
-    case "SHOW_COMPLETED":
-      return todos.filter((t) => t.completed);
-    default:
-      return todos;
-  }
-}
+import { deleteTodoAction, toggleTodoAction } from "../redux/actions";
+import { selectVisibleTodos } from "../redux/selectors";
 
 function VisibleTodoList() {
   const dispatch = useDispatch();
@@ -23,18 +10,8 @@ function VisibleTodoList() {
   return (
     <TodoList
       todos={visibleTods}
-      onTodoClick={(id) => {
-        dispatch({
-          type: "TOGGLE_TODO",
-          id
-        });
-      }}
-      onTodoDeleteClick={(id) =>
-        dispatch({
-          type: "DELETE_TODO",
-          id
-        })
-      }
+      onTodoClick={(id) => dispatch(toggleTodoAction(id))}
+      onTodoDeleteClick={(id) => dispatch(deleteTodoAction(id))}
     />
   );
 }

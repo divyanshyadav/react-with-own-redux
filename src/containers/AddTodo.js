@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "../libs/react-redux";
+import { addTodoAction } from "../redux/actions";
 
 function AddTodo() {
   const dispatch = useDispatch();
@@ -10,12 +11,7 @@ function AddTodo() {
       <input ref={textFieldRef} />
       <button
         onClick={() => {
-          dispatch({
-            type: "ADD_TODO",
-            id: Date.now().toString(),
-            text: textFieldRef.current.value
-          });
-
+          dispatch(addTodoAction(textFieldRef.current.value));
           textFieldRef.current.value = "";
         }}
       >
