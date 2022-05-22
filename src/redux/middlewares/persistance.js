@@ -23,7 +23,7 @@ export const saveState = (state, key = STORE_KEY) => {
   }
 };
 
-const persistance = (fn = (state) => state, delay) => {
+const persistance = (delay, fn = (state) => state) => {
   const saveFn = throttle((state) => {
     saveState(fn(state));
   }, delay);

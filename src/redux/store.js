@@ -12,7 +12,7 @@ export function configureStore() {
     middlewares.push(logger);
   }
 
-  middlewares.push(persistance((state) => ({ todos: state.todos }), 500));
+  middlewares.push(persistance(500));
 
   const store = createStore(
     combineReducers({ todos }),
