@@ -21,27 +21,33 @@ export const createStore = (
     listeners.forEach((listener) => listener());
   };
 
-  dispatchEnhancer(dispatch);
-  dispatch({});
-
-  return {
+  const store = {
     getState,
     dispatch,
     subscribe
   };
+
+  dispatchEnhancer(store);
+  dispatch({});
+
+  return store;
 };
 
-export const combineReducers = (reducers) => (state = {}, action) =>
-  Object.keys(reducers).reduce((acc, key) => {
-    acc[key] = reducers[key](state[key], action);
-    return acc;
-  }, {});
+export const combineReducers =
+  (reducers) =>
+  (state = {}, action) =>
+    Object.keys(reducers).reduce((acc, key) => {
+      acc[key] = reducers[key](state[key], action);
+      return acc;
+    }, {});
 
-export const applyMiddleware = (...middlewares) => (store) => {
-  middlewares
-    .slice()
-    .reverse()
-    .forEach((middleware) => {
-      store.dispatch = middleware(store)(store.dispatch);
-    });
-};
+export const applyMiddleware =
+  (...middlewares) =>
+  (store) => {
+    middlewares
+      .slice()
+      .reverse()
+      .forEach((middleware) => {
+        store.dispatch = middleware(store)(store.dispatch);
+      });
+  };

@@ -14,7 +14,8 @@ function AddTodo() {
         e.preventDefault();
         // dispatch(addTodoAction(textFieldRef.current.value));
         const value = textFieldRef.current.value;
-        dispatch(delay(500).then(() => addTodoAction(value)));
+        const asyncAction = delay(500).then(() => addTodoAction(value));
+        dispatch(asyncAction);
         textFieldRef.current.value = "";
       }}
     >
