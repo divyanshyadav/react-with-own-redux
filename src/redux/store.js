@@ -3,6 +3,7 @@ import { loadState, saveState } from "../libs/local-storage";
 import { createStore, combineReducers, applyMiddleware } from "../libs/redux";
 import logger from "./middlewares/logger";
 import promise from "./middlewares/promise";
+import persistance from "./middlewares/persistance";
 import todos from "./reducers/todos";
 
 export function configureStore() {
@@ -13,20 +14,14 @@ export function configureStore() {
     middlewares.push(logger);
   }
 
+  // middlewares.push(
+  //   persistance(throttle((state) => saveState({ todos: state.todos }), 100))
+  // );
+
   const store = createStore(
     combineReducers({ todos }),
     initialState,
     applyMiddleware(...middlewares)
-  );
-
-  store.subscribe(
-    throttle(
-      () =>
-        saveState({
-          todos: store.getState().todos
-        }),
-      1000
-    )
   );
 
   return store;
